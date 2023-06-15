@@ -1,16 +1,32 @@
 package com.tingeso.marcasrelojservice.repositories;
 
 import com.tingeso.marcasrelojservice.entities.MarcasRelojEntity;
+import com.tingeso.marcasrelojservice.entities.SubirDataEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public interface MarcasRelojRepository extends JpaRepository <MarcasRelojEntity, Integer>{
+public interface SubirDataRepository extends JpaRepository <SubirDataEntity, Integer>{
+
+    @Query(value = "select * from data as a where a.proveedor = :codigo",
+            nativeQuery = true)
+    ArrayList<SubirDataEntity> getbyCodigo(@Param("codigo") String codigo);
+
+    @Query(value = "select * from data as a where a.proveedor = :codigo and a.turno = :turno",
+            nativeQuery = true)
+    ArrayList<SubirDataEntity> getbyTurnoAndCodigo(@Param("turno") String turno,@Param("codigo") String codigo);
+
+    @Transactional
+    void deleteByProveedor(String proveedor);
+    //______________________________________________________________________
+
+
 
     @Query(value = "select * from marcasreloj as e where e.rut = :rut and e.fecha =:fecha limit 1",
             nativeQuery = true)

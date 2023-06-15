@@ -2,12 +2,15 @@ package com.tingeso.marcasrelojservice.services;
 
 
 import com.tingeso.marcasrelojservice.entities.MarcasRelojEntity;
+import com.tingeso.marcasrelojservice.entities.SubirDataEntity;
+import com.tingeso.marcasrelojservice.repositories.MarcasRelojRepository;
+import com.tingeso.marcasrelojservice.repositories.SubirDataRepository;
+import lombok.Generated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import com.tingeso.marcasrelojservice.repositories.MarcasRelojRepository;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -19,94 +22,123 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class MarcasRelojService {
+public class SubirDataService {
 
     @Autowired
-    private MarcasRelojRepository marcasRelojRepository;
+    private SubirDataRepository dataRepository;
 
-    private final Logger logg = LoggerFactory.getLogger(MarcasRelojService.class);
+    private final Logger logg = LoggerFactory.getLogger(SubirDataService.class);
 
-    public ArrayList<MarcasRelojEntity> obtenerData() {
-        return (ArrayList<MarcasRelojEntity>) marcasRelojRepository.findAll();
+    public ArrayList<SubirDataEntity> obtenerData() {
+        return (ArrayList<SubirDataEntity>) dataRepository.findAll();
     }
 
-    public String guardar(MultipartFile file) {
+    public String guardar(MultipartFile file){
         String filename = file.getOriginalFilename();
-        if (filename != null) {
-            if ((!file.isEmpty()) && (filename.toUpperCase().equals("DATA.TXT"))) {
-                try {
-                    byte[] bytes = file.getBytes();
-                    Path path = Paths.get(file.getOriginalFilename());
+        if(filename != null){
+            if(!file.isEmpty()){
+                try{
+                    byte [] bytes = file.getBytes();
+                    Path path  = Paths.get(file.getOriginalFilename());
                     Files.write(path, bytes);
                     logg.info("Archivo guardado");
-                } catch (IOException e) {
+                }
+                catch (IOException e){
                     logg.error("ERROR", e);
                 }
             }
             return "Archivo guardado con exito!";
-        } else {
+        }
+        else{
             return "No se pudo guardar el archivo";
         }
     }
 
-    public MarcasRelojEntity obtenerEspecifico(String rut, String fecha){
+   /** public MarcasRelojEntity obtenerEspecifico(String rut, String fecha){
         return marcasRelojRepository.buscarData(rut, fecha);
     }
 
     public MarcasRelojEntity obtenerEspecifico2(String rut, String fecha){
         return marcasRelojRepository.buscarData2(rut, fecha);
-    }
+    }**/
 
-    public void leerTxt(String direccion) {
+    public String leerCsv(String direccion){
         String texto = "";
         BufferedReader bf = null;
-        marcasRelojRepository.deleteAll();
-        try {
+        dataRepository.deleteAll();
+        try{
             bf = new BufferedReader(new FileReader(direccion));
             String temp = "";
             String bfRead;
-            while ((bfRead = bf.readLine()) != null) {
-                String fecha = bfRead.split(";")[0];
-                String newFecha = fecha.replaceAll("/","-");
-                guardarDataDB(newFecha, bfRead.split(";")[1], bfRead.split(";")[2]);
-                temp = temp + "\n" + bfRead;
+            int count = 1;
+            while((bfRead = bf.readLine()) != null){
+                if (count == 1){
+                    count = 0;
+                }
+                else{
+                    guardarDataDB(bfRead.split(";")[0], bfRead.split(";")[1], bfRead.split(";")[2], bfRead.split(";")[3]);
+                    temp = temp + "\n" + bfRead;
+                }
             }
             texto = temp;
-            System.out.println("Archivo leido exitosamente");
-        } catch (Exception e) {
-            System.err.println("No se encontro el archivo");
-        } finally {
-            if (bf != null) {
-                try {
+            return "Archivo leido exitosamente";
+        }catch(Exception e){
+            return "No se encontro el archivo";
+        }finally{
+            if(bf != null){
+                try{
                     bf.close();
-                } catch (IOException e) {
+                }catch(IOException e){
                     logg.error("ERROR", e);
                 }
             }
         }
     }
 
-    public void guardarData(MarcasRelojEntity data) {
-        marcasRelojRepository.save(data);
-    }
 
-    public void guardarDataDB(String fecha, String hora, String rut) {
-        MarcasRelojEntity newData = new MarcasRelojEntity();
+    public void guardarDataDB(String fecha, String turno, String proveedor, String kls_leche){
+        SubirDataEntity newData = new SubirDataEntity();
         newData.setFecha(fecha);
-        newData.setRut(rut);
-        newData.setHora(hora);
-        guardarData(newData);
+        newData.setTurno(turno);
+        newData.setProveedor(proveedor);
+        newData.setKls_leche(kls_leche);
+        dataRepository.save(newData);
     }
 
-    public String obtenerFechaRut(String rut){
-        return marcasRelojRepository.buscarFechaRut(rut);
+    public ArrayList<SubirDataEntity> obtenerAcopioPorCodigo(String codigo) {
+        return dataRepository.getbyCodigo(codigo);
     }
 
-    public List<String> obtenerRuts() {
-        return marcasRelojRepository.findDistinctRut();
+    public ArrayList<SubirDataEntity> obtenerAcopioPorTurnoAndCodigo(String turno, String codigo) {
+        return dataRepository.getbyTurnoAndCodigo(turno, codigo);
     }
 
-    public void eliminarData(ArrayList<MarcasRelojEntity> datas){
-        marcasRelojRepository.deleteAll(datas);
+    public String obtenerFechaPorCodigo(String codigo) {
+
+        ArrayList<SubirDataEntity> acopio = dataRepository.getbyCodigo(codigo);
+        return buscarPorCodigo(acopio, codigo);
+    }
+
+    public String buscarPorCodigo(ArrayList<SubirDataEntity> acopio, String codigo){
+
+        String fecha = null;
+        for(SubirDataEntity a:acopio){
+            if(a.getProveedor().equals(codigo)){
+                fecha = a.getFecha();
+            }
+            else{
+                fecha = null;
+            }
+        }
+        return fecha;
+    }
+
+    public void eliminarData(String codigo){
+        dataRepository.deleteByProveedor(codigo);
+
+    }
+
+    public void eliminarData(ArrayList<SubirDataEntity> datas){
+        dataRepository.deleteAll(datas);
     }
 }

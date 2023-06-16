@@ -28,3 +28,7 @@ spring:
           uri: lb://subirData-service
           predicates:
             - Path=/fileUpload/**
+        - id: subirPorcentaje-service
+          uri: lb://subirPorcentaje-service
+          predicates:
+            - Path=/file-percentage/**

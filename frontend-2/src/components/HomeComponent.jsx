@@ -12,7 +12,7 @@ export default function Home(){
                 <h1 className="text-center"> <b>MilkStgo</b></h1>
                 <div class="box-area">
                     <div class="single-box">
-                        <a href="/subir-archivo">
+                        <a href="/subir-data">
                             <div class="img-area">
                             </div>
                         </a>
@@ -30,7 +30,7 @@ export default function Home(){
                         </div>
                     </div>
                     <div class="single-box">
-                        <a href="/justificativo">
+                        <a href="/subir-porcentaje">
                             <div class="img-area"></div>
                         </a>
                         <div class="img-text">

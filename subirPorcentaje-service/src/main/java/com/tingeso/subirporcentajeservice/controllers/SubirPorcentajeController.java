@@ -1,7 +1,8 @@
-package com.tingeso.subirDatasService.controllers;
+package com.tingeso.subirporcentajeservice.controllers;
 
-import com.tingeso.subirDatasService.entities.SubirDataEntity;
-import com.tingeso.subirDatasService.services.SubirDataService;
+
+import com.tingeso.subirporcentajeservice.entities.SubirPorcentajeEntity;
+import com.tingeso.subirporcentajeservice.services.SubirPorcentajeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,14 +13,14 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/file-percentage")
-public class SubirDataController {
+public class SubirPorcentajeController {
 
     @Autowired
-    private SubirDataService subirData;
+    private SubirPorcentajeService subirPorcentaje;
 
     @GetMapping
-    public ResponseEntity<ArrayList<SubirDataEntity>> obtenerData() {
-        ArrayList<SubirDataEntity> data = subirData.obtenerData();
+    public ResponseEntity<ArrayList<SubirPorcentajeEntity>> obtenerData() {
+        ArrayList<SubirPorcentajeEntity> data = subirPorcentaje.obtenerData();
         if (data.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -28,9 +29,9 @@ public class SubirDataController {
 
     @PostMapping
     public void upload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
-        subirData.guardar(file);
-        redirectAttributes.addFlashAttribute("mensaje", "¡Archivo Acopio.csv cargado correctamente!");
-        subirData.leerCsv("Acopio.csv");
+        subirPorcentaje.guardar(file);
+        redirectAttributes.addFlashAttribute("mensaje", "¡Archivo porcentajes.csv cargado correctamente!");
+        subirPorcentaje.leerCsv("porcentajes.csv");
 
     }
 

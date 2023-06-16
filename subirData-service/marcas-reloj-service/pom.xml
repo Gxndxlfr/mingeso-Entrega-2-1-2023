@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.tingeso</groupId>
-	<artifactId>subir-Porcentaje-service</artifactId>
+	<artifactId>marcas-reloj-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>subir-Porcentaje-service</name>
+	<name>marcas-reloj-service</name>
 	<description>Empleado</description>
 	<properties>
 		<java.version>11</java.version>

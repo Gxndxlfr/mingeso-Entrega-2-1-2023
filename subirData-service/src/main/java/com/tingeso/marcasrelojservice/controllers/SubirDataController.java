@@ -29,7 +29,7 @@ public class SubirDataController {
         return ResponseEntity.ok(data);
     }
 
-    @PostMapping("/")
+    @PostMapping
     public void upload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
         subirData.guardar(file);
         redirectAttributes.addFlashAttribute("mensaje", "¡Archivo Acopio.csv cargado correctamente!");

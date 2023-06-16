@@ -20,10 +20,6 @@ public class SubirDataController {
     @Autowired
     private SubirDataService subirData;
 
-    @GetMapping("/fileUpload")
-    public String main() { return "fileUpload";}
-
-
     @GetMapping
     public ResponseEntity<ArrayList<SubirDataEntity>> obtenerData() {
         ArrayList<SubirDataEntity> data = subirData.obtenerData();

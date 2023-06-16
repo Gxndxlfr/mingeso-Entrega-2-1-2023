@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("/file-percentage")
+@RequestMapping("/fileUpload")
 public class SubirDataController {
 
     @Autowired

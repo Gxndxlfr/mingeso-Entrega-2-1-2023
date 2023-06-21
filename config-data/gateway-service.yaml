@@ -32,3 +32,7 @@ spring:
           uri: lb://subirPorcentaje-service
           predicates:
             - Path=/file-percentage/**
+        - id: proveedor-service
+          uri: lb://proveedor-service
+          predicates:
+            - Path=/proveedor/**

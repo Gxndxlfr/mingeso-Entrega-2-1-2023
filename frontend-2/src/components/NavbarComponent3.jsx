@@ -7,10 +7,11 @@ function NavbarComponent3(){
         <NavStyle>
             <header class="header">
                 <div class="logo">
-                    <h1>MueblesStgo</h1>
+                    <h1>MilkStgo</h1>
                 </div>
                 <nav>
                 </nav>
+                <a class="btn" href="/subir-proveedor"><button>Ingresar Nuevo Proveedor</button></a>
                 <a class="btn" href="/"><button>Volver al menú principal</button></a>
             </header>
             </NavStyle>

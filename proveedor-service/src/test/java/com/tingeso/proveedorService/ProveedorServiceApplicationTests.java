@@ -1,2 +1,13 @@
-package com.tingeso.proveedorService;public class ProveedorServiceApplicationTests {
+package com.tingeso.proveedorService;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class ProveedorServiceApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
 }

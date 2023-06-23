@@ -28,9 +28,9 @@ public class ProveedorController {
     }
 
     @PostMapping
-    public void guardarEmpleado(@RequestBody ProveedorEntity empleado){
+    public void guardarEmpleado(@RequestBody ProveedorEntity proveedor){
 
-        proveedorService.guardarProveedor(empleado);
+        proveedorService.guardarProveedor(proveedor);
         //registroQuincenaService.guardarRegistroQuincena(codigo,"0","0","0");
     }
 

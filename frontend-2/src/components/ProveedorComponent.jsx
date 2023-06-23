@@ -6,7 +6,7 @@ class ProveedorComponent extends Component{
     constructor(props){
         super(props);
         this.state = {
-            employees: [],
+            proveedores: [],
         };
     }
 
@@ -26,7 +26,6 @@ class ProveedorComponent extends Component{
                     <table border="1" class="content-table">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Codigo</th>
                                 <th>Nombre</th>
                                 <th>Categoria</th>

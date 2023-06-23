@@ -1,0 +1,26 @@
+spring:
+  devtools:
+    restart:
+      aditional-paths: src/main/java
+  application:
+    name: registroQuincena-service
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:8081
+  jpa:
+    show-sql: true
+    hibernate:
+      dialect: PostgreSQLDialect
+      ddl-auto: create-drop
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    dbname: postgres
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: admin
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

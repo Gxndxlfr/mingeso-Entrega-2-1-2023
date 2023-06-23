@@ -36,3 +36,7 @@ spring:
           uri: lb://proveedor-service
           predicates:
             - Path=/proveedor/**
+        - id: registroQuincena-service
+          uri: lb://registroQuincena-service
+          predicates:
+            - Path=/quincena/**

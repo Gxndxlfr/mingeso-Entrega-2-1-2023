@@ -33,10 +33,23 @@ public class RegistroQuincenaController {
     @GetMapping("/{codigo}")
     public ResponseEntity<RegistroQuincenaEntity> obtenerStAntigua(@PathVariable("codigo") String codigo){
         RegistroQuincenaEntity data = quincenaService.obtenerStAntigua(codigo);
+        System.out.println(data);
         if(data == null)
             return ResponseEntity.notFound().build();
         return ResponseEntity.ok(data);
     }
 
+    @PostMapping("/update")
+    public ResponseEntity<RegistroQuincenaEntity> update(@RequestBody RegistroQuincenaEntity quincena) {
+        System.out.println("AAAAAAALO");
+        System.out.println(quincena);
+
+        quincenaService.eliminarQuincena(quincena.getCodigo());
+        RegistroQuincenaEntity newQuincena = quincenaService.guardarRegistroQuincena(quincena.getCodigo(),quincena.getGrasa(),
+                quincena.getSt(), quincena.getKilos());
+
+        System.out.println("AAAAAAALO 2");
+        return ResponseEntity.ok(newQuincena);
+    }
 
 }

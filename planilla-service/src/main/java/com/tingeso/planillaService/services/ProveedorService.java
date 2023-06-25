@@ -17,7 +17,7 @@ public class ProveedorService {
     @Autowired
     RestTemplate restTemplate;
     public ArrayList<ProveedorModel> obtenerProveedores() {
-        String url = "http://proveedor-service/empleado";
+        String url = "http://proveedor-service/proveedor";
         ResponseEntity<Object[]> response = restTemplate.getForEntity(url, Object[].class); // Se usa lista de Object para mapear la repuesta JSON
         Object[] records = response.getBody(); // Obtener lista de proveedores desde microservicio proveedor
         if (records == null) {

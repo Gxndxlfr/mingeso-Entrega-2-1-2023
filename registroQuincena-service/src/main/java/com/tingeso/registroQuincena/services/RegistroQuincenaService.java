@@ -52,6 +52,7 @@ public class RegistroQuincenaService {
     }
 
     public RegistroQuincenaEntity obtenerStAntigua(String codigo) {
+        System.out.println("+´+´++´+´+´+´+´+");
         return registroQuincenaRepository.getByCodigo(codigo);
     }
 

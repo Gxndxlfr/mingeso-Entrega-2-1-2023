@@ -24,6 +24,8 @@ public class PlanillaController {
     @GetMapping
     public ResponseEntity<List<PlanillaEntity>> obtenerPlanilla() throws ParseException {
 
+        planillaService.vaciarBD();
+
         List<PlanillaEntity> reporteSueldos = planillaService.calcularPagos();
         if(reporteSueldos.isEmpty()){
             return ResponseEntity.noContent().build();

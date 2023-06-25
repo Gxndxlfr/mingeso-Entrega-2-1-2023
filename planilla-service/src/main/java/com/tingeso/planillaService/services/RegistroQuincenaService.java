@@ -1,8 +1,8 @@
 package com.tingeso.planillaService.services;
 
 import com.tingeso.planillaService.models.RegistroQuincenaModel;
-import com.tingeso.planillaService.models.SubirPorcentajeModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -12,7 +12,18 @@ public class RegistroQuincenaService {
 
     @Autowired
     RestTemplate restTemplate;
-    public void actualizarDatos(String codigo, int kilos, int stActual, int grasaActual) {
+    public RegistroQuincenaModel actualizarDatos(String codigo, int kilos, int stActual, int grasaActual) {
+
+
+        String k = String.valueOf(kilos);
+        String s = String.valueOf(stActual);
+        String g = String.valueOf(grasaActual);
+        RegistroQuincenaModel quincena = new RegistroQuincenaModel(k,codigo,g,s);
+        HttpEntity<RegistroQuincenaModel> request = new HttpEntity<>(quincena);
+        System.out.println(quincena);
+        RegistroQuincenaModel newQuincena = restTemplate.postForObject("http://registroQuincena-service/quincena/update", request, RegistroQuincenaModel.class);
+
+        return newQuincena;
     }
 
     public int obtenerStAntigua(String codigo) {

@@ -33,6 +33,7 @@ public class PlanillaService {
 
 
     public List<PlanillaEntity> calcularPagos() {
+        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%1");
         ArrayList<ProveedorModel> proveedores = proveedorService.obtenerProveedores();
 
         //recorrer proveedores
@@ -101,8 +102,7 @@ public class PlanillaService {
             //pagoFinal
             int pagoFinal = pagoTotal-retencion;
             System.out.println("pagoFinal= "+pagoFinal);
-            //actualizar valores anterior quincena
-            actualizarPorcentajes(proveedor.getCodigo(),kilosLeche);
+
 
             //nueva entidad planilla
             String codigo = proveedor.getCodigo();
@@ -111,8 +111,9 @@ public class PlanillaService {
             System.out.println("nombre= "+nombre);
 
 
-
+            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%2");
             String quincena = subirDataService.obtenerFechaPorCodigo(codigo);
+            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%3");
             System.out.println("quincena= "+quincena);
             int cantDias = contarDias(codigo);
             double promedioKlsLeche = kilosLeche/(double)cantDias;
@@ -124,8 +125,13 @@ public class PlanillaService {
             double varSt = calcularVariacionSt(codigo);
             System.out.println("varSt 2= "+varSt);
 
-            int grasaActual = subirPorcentajeService.obtenerGrasaActual(codigo); ;
+            int grasaActual = subirPorcentajeService.obtenerGrasaActual(codigo);
+            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%4");
             int stActual = subirPorcentajeService.obtenerStActual(codigo);
+            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5");
+
+            //actualizar valores anterior quincena
+            actualizarPorcentajes(proveedor.getCodigo(),kilosLeche);
             guardarInfoPago(quincena,codigo,nombre,kilosLeche,cantDias,promedioKlsLeche,varLeche,grasaActual, varGrasa,stActual, varSt,pagoLeche,pagoGrasa,pagoST,bonificacionPago,descuento_1,descuento_2,descuento_3,pagoTotal,retencion,pagoFinal);
 
         }
@@ -133,6 +139,7 @@ public class PlanillaService {
 
 
         return  planillaRepository.findAll();
+
 
     }
 
@@ -189,7 +196,8 @@ public class PlanillaService {
         int grasaActual = subirPorcentajeService.obtenerGrasaActual(codigo);
         System.out.println("grasa Actual = "+grasaActual);
         registroQuincenaService.actualizarDatos(codigo,kilos,stActual,grasaActual);
-        System.out.println("------------------");
+
+        System.out.println("-------SE ACTUALIZO LA QUINCENA ANTERIOR--------");
 
         return "porcentajes Actualizados";
     }
@@ -256,20 +264,21 @@ public class PlanillaService {
         //obtener Porcentajes antiguos
         int grasaAntigua = registroQuincenaService.obtenerGrasaAntigua(codigo);
         //calcular variación
-        double variacionPorcentual = calcularVariacionPorcentual(grasaActual, grasaAntigua);
+        double variacionPorcentual = calcularVariacionPorcentual(grasaActual,grasaAntigua);
 
         System.out.println("variacionGrasa 1= "+variacionPorcentual);
         return variacionPorcentual;
     }
     public double calcularVariacionPorcentual(int valor1, int valor2){
 
-        if(valor1 == 0){
+        if(valor2 == 0){
             return 0.0;
         }else{
 
             double valor_2= (double)(valor2);
+            double resultado = ((valor_2 - (double) valor1)/ (double) valor1)*100.0;
 
-            return ((valor_2 - (double) valor1)/ (double) valor1)*100.0;
+            return resultado*(-1);
         }
     }
     public int obtenerDescuentoLeche(String codigo) {

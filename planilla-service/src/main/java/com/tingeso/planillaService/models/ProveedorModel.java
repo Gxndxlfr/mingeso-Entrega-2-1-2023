@@ -11,6 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProveedorModel {
+    private Long ID;
     private String codigo;
     private String nombre;
     private String categoria;

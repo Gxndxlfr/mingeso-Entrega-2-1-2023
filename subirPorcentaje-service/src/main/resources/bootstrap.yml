@@ -16,7 +16,7 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     dbname: postgres
-    url: jdbc:postgresql://localhost:5432/SubirPorcentajeBD
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: admin
 

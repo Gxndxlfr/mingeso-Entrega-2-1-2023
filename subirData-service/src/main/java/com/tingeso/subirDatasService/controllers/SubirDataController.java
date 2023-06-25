@@ -19,6 +19,8 @@ public class SubirDataController {
 
     @GetMapping
     public ResponseEntity<ArrayList<SubirDataEntity>> obtenerData() {
+
+
         ArrayList<SubirDataEntity> data = subirData.obtenerData();
         if (data.isEmpty()) {
             return ResponseEntity.noContent().build();

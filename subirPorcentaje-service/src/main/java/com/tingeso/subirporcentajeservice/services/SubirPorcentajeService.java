@@ -104,12 +104,12 @@ public class SubirPorcentajeService {
         return porcentajeRepository.getbyCodigo(codigo);
     }
 
-    public int obtenerGrasaActual(String codigo) {
-        return Integer.parseInt(porcentajeRepository.getbyCodigo(codigo).getGrasa());
+    public SubirPorcentajeEntity obtenerGrasaActual(String codigo) {
+        return porcentajeRepository.getbyCodigo(codigo);
     }
 
-    public int obtenerStActual(String codigo) {
-        return Integer.parseInt(porcentajeRepository.getbyCodigo(codigo).getSolidoTotal());
+    public SubirPorcentajeEntity obtenerStActual(String codigo) {
+        return porcentajeRepository.getbyCodigo(codigo);
     }
 
     public String eliminarPorcentaje(String codigo){

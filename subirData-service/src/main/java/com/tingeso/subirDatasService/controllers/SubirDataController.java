@@ -34,6 +34,30 @@ public class SubirDataController {
 
     }
 
+    @GetMapping("/{codigo}")
+    public ResponseEntity<SubirDataEntity> obtenerPorCodigo(@PathVariable("codigo") String codigo){
+        SubirDataEntity data = subirData.obtenerFechaPorCodigo(codigo);
+        if(data == null)
+            return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(data);
+    }
+
+    @GetMapping("/all/{codigo}")
+    public ResponseEntity<ArrayList<SubirDataEntity>> obtenerAcopioPorCodigo(@PathVariable("codigo") String codigo){
+        ArrayList<SubirDataEntity> data = subirData.obtenerAcopioPorCodigo(codigo);
+        if(data == null)
+            return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(data);
+    }
+
+    @GetMapping("/{codigo}/{turno}")
+    public ResponseEntity<ArrayList<SubirDataEntity>> obtenerStAntigua(@PathVariable("codigo") String codigo, @PathVariable("turno") String turno){
+        ArrayList<SubirDataEntity> data = subirData.obtenerAcopioPorTurnoAndCodigo(turno,codigo);
+        if(data == null)
+            return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(data);
+    }
+
 
 
 

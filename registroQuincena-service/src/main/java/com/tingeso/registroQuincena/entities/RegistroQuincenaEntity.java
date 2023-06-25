@@ -5,9 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table (name = "quincena")
@@ -15,9 +13,11 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Data
 public class RegistroQuincenaEntity {
-    @Id
+
     @NotNull
-    private Integer ID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String kilos;
     private String codigo;
     private String grasa;

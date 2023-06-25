@@ -35,6 +35,21 @@ public class SubirPorcentajeController {
 
     }
 
+    @GetMapping("/grasa/{codigo}")
+    public ResponseEntity<SubirPorcentajeEntity> obtenerGrasaPorCodigo(@PathVariable("codigo") String codigo){
+        SubirPorcentajeEntity data = subirPorcentaje.obtenerGrasaActual(codigo);
+        if(data == null)
+            return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(data);
+    }
+    @GetMapping("/st/{codigo}")
+    public ResponseEntity<SubirPorcentajeEntity> obtenerStPorCodigo(@PathVariable("codigo") String codigo){
+        SubirPorcentajeEntity data = subirPorcentaje.obtenerStActual(codigo);
+        if(data == null)
+            return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(data);
+    }
+
 
 
 

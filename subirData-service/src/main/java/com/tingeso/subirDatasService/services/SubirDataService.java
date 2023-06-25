@@ -109,24 +109,24 @@ public class SubirDataService {
         return dataRepository.getbyTurnoAndCodigo(turno, codigo);
     }
 
-    public String obtenerFechaPorCodigo(String codigo) {
+    public SubirDataEntity obtenerFechaPorCodigo(String codigo) {
 
         ArrayList<SubirDataEntity> acopio = dataRepository.getbyCodigo(codigo);
         return buscarPorCodigo(acopio, codigo);
     }
 
-    public String buscarPorCodigo(ArrayList<SubirDataEntity> acopio, String codigo){
+    public SubirDataEntity buscarPorCodigo(ArrayList<SubirDataEntity> acopio, String codigo){
 
-        String fecha = null;
+        SubirDataEntity data = null;
         for(SubirDataEntity a:acopio){
             if(a.getProveedor().equals(codigo)){
-                fecha = a.getFecha();
+                data = a;
             }
             else{
-                fecha = null;
+                data = null;
             }
         }
-        return fecha;
+        return data;
     }
 
     public void eliminarData(String codigo){

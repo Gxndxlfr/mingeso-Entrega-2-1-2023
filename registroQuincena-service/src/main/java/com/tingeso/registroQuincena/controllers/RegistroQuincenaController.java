@@ -19,10 +19,24 @@ public class RegistroQuincenaController {
     @Autowired
     private RegistroQuincenaRepository registroQuincenaRepository;
 
-    @PostMapping
+    @PostMapping("/save")
     public ResponseEntity<RegistroQuincenaEntity> save(@RequestBody RegistroQuincenaEntity quincena) {
+        System.out.println("AAAAAAALO");
+        System.out.println(quincena);
         RegistroQuincenaEntity newQuincena = quincenaService.guardarRegistroQuincena(quincena.getCodigo(),quincena.getGrasa(),
                 quincena.getSt(), quincena.getKilos());
+
+        System.out.println("AAAAAAALO 2");
         return ResponseEntity.ok(newQuincena);
     }
+
+    @GetMapping("/{codigo}")
+    public ResponseEntity<RegistroQuincenaEntity> obtenerStAntigua(@PathVariable("codigo") String codigo){
+        RegistroQuincenaEntity data = quincenaService.obtenerStAntigua(codigo);
+        if(data == null)
+            return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(data);
+    }
+
+
 }

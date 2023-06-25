@@ -51,8 +51,8 @@ public class RegistroQuincenaService {
         return Integer.parseInt(registroQuincenaRepository.getByCodigo(codigo).getGrasa());
     }
 
-    public int obtenerStAntigua(String codigo) {
-        return Integer.parseInt(registroQuincenaRepository.getByCodigo(codigo).getSt());
+    public RegistroQuincenaEntity obtenerStAntigua(String codigo) {
+        return registroQuincenaRepository.getByCodigo(codigo);
     }
 
     public String actualizarDatos(String codigo, int kilos, int stActual, int grasaActual) {

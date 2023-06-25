@@ -1,8 +1,10 @@
 package com.tingeso.proveedorService.controllers;
 
+
+
 import com.tingeso.proveedorService.entities.ProveedorEntity;
-import com.tingeso.proveedorService.services.ProveedorService;
 import com.tingeso.proveedorService.services.RegistroQuincenaService;
+import com.tingeso.proveedorService.services.ProveedorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +37,8 @@ public class ProveedorController {
     public void guardarEmpleado(@RequestBody ProveedorEntity proveedor){
 
         proveedorService.guardarProveedor(proveedor);
-        registroQuincenaService.guardarRegistroQuincena(codigo,"0","0","0");
+        System.out.println("quincenaaaaaaaa");
+        registroQuincenaService.guardarRegistroQuincena(proveedor.getCodigo(),"0","0","0");
     }
 
    /* @PostMapping("/nuevo-proveedor")

@@ -40,3 +40,7 @@ spring:
           uri: lb://registroQuincena-service
           predicates:
             - Path=/quincena/**
+        - id: planilla-service
+          uri: lb://planilla-service
+          predicates:
+            - Path=/planilla/**

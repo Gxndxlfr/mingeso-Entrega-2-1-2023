@@ -1,40 +1,25 @@
-kind: Service
-apiVersion: v1
-metadata:
-  name: springboot-postgres-k8s
-  labels:
-    name: springboot-postgres-k8s
-spec:
-  ports:
-    - nodePort: 30163
-      port: 8003
-      targetPort: 8081
-      protocol: TCP
-  selector:
-    app: springboot-postgres-k8s
-  type: NodePort
-
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: springboot-postgres-k8s
+  name: subir-data-service
+  labels:
+    app: subir-data-service
 spec:
   selector:
     matchLabels:
-      app: springboot-postgres-k8s
-  replicas: 3
+      app: subir-data-service
+  replicas: 2
   template:
     metadata:
       labels:
-        app: springboot-postgres-k8s
+        app: subir-data-service
     spec:
       containers:
-        - name: springboot-postgres-k8s
-          image: springboot-postgres-k8s:1.0
+        - name: subir-data-service
+          image: derflinger/subir-data-service:latest
           ports:
-            - containerPort: 8080
-          env:   # Setting Enviornmental Variables
+            - containerPort: 8082
+          env: # Setting Enviornmental Variables
             - name: DB_HOST   # Setting Database host address from configMap
               valueFrom:
                 configMapKeyRef:
@@ -55,3 +40,20 @@ spec:
                 secretKeyRef:
                   name: postgres-credentials
                   key: postgres_password
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: subir-data-service
+  labels:
+    app: subir-data-service
+spec:
+  selector:
+    app: subir-data-service
+  ports:
+    - nodePort: 3002
+      protocol: TCP
+      port: 8082
+      targetPort: 8082
+  type: NodePort

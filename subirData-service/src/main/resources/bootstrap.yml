@@ -1,3 +1,4 @@
+
 spring:
   devtools:
     restart:
@@ -19,7 +20,11 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: admin
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 
 
